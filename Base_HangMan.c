@@ -77,7 +77,7 @@ void personagem(int chances, char palavraSecreta[], char palavraAux[], char letr
 		printf("__|_________\n\n");
 	break;
 
-		case 6 :
+	case 6 :
 		printf("\n  _______\n");
 		printf("  |/   | \n");
 		printf("  |    X \n");
@@ -89,6 +89,16 @@ void personagem(int chances, char palavraSecreta[], char palavraAux[], char letr
 		printf("\nGAME OVER!");
 		exit(0);
 	break;
+
+	case 7:
+		printf("\n _________________________");
+		printf("\n|                         |");
+		printf("\n| Parabéns! Você acertou! |");
+		printf("\n|_________________________|");
+		printf("\n        \\ (•◡•) /         ");
+		printf("\n");
+		exit(0);
+	break; 
 	}
 }
 
@@ -332,25 +342,13 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 			chances++;
 		}
 
+		//compara palavra secreta à palavra auxiliar. Se estiverem iguais, usuário acertou e ganhou jogo
+		chances = strcmp(palavraSecreta, palavraAux) == 0? 7 : chances;
+
 		//exibe na tela o resultado da rodada
 		personagem(chances, palavraSecreta, palavraAux, letrasUsadas);
 
-		//compara palavra secreta à palavra auxiliar. Se estiverem iguais, usuário acertou e ganhou jogo
-		//o tupper foi usado como forma de deixar o usuário à vontade para digotar maiúsculas ou minúsculas, sem gerar erros
-		ganhou = strcmp(palavraSecreta, palavraAux) == 0? 1 : 0;
-
-		//comemoração visual quando usuário vence
-		if (ganhou == 1) {
-			printf("\n _________________________");
-			printf("\n|                         |");
-			printf("\n| Parabéns! Você acertou! |");
-			printf("\n|_________________________|");
-			printf("\n        \\ (•◡•) /         ");
-			printf("\n");
-			exit(0);
-		}
-
-	} while (chances <= 6);	
+	} while (chances < 7);	
 }
 
 int main(void) {

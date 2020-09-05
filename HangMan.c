@@ -332,7 +332,7 @@ char digitaLetra(){
 			checaAlfa = 1;
 			return letra;
 		} else {
-			printf("\nDigite somente letras sem acentos nem caracteres especiais");
+			printf("\nNão use acentos nem caracteres especiais");
 		}
 
 	} while (checaAlfa == 0);

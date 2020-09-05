@@ -278,18 +278,21 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 	}
 }
 
-char chutaLetra(){
+char chutaLetra(int chances){
 	srand(time(0));
 	int max = 90;
 	int min = 65;
+	int num;
 
 	//escolhe um número randômico entre 65 e 90, que corresponde ao intervao de A a Z na tabela ASCII
-	int num = rand() % (max + 1 - min) + min;
+	//o for é para forçar a execução do rand novamente, senão, o num será sempre o mesmo
+	for (int n = 0; n <= chances; n++){
+		num = rand() % (max + 1 - min) + min;
+	}
 
 	//converte o numero em caractere
 	char letter = (char) num;
 
-	printf("\nComputador escolheu %c", letter);
 	return letter;
 }
 
@@ -360,8 +363,8 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 		if (modalidade == 11 || modalidade == 22){
 			letra = digitaLetra();
 		} else if (modalidade == 21){
-			letra = chutaLetra();
-			chances++;
+			letra = chutaLetra(chances);
+			chances++;//começa com zero, por isso vem depois da primeira execução de letra()
 		} else {
 			printf("Algo estranho aconteceu. Desculpe =(");
 			exit(0);

@@ -279,14 +279,10 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	int adicionar = 0;
 	int y;
 
-	//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
-	if (strlen(letrasUsadas) == 0){
-		letrasUsadas[0] = letra;
-	}
-
 	//confere se letra recebida está na lista
 	for (y = 0; y < strlen(letrasUsadas); y++) {
 		if (letrasUsadas[y] == letra || letrasUsadas[y] == toupper(letra)){
+			printf("\nLetra já utilizada!\n");
 			adicionar = 0;
 		} else {
 			adicionar = 1;
@@ -296,6 +292,11 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	//caso letra não esteja na lista, adiciona na próxima posição
 	if (adicionar == 1){
 		letrasUsadas[y+1] = toupper(letra);
+	}
+
+	//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
+	if (strlen(letrasUsadas) == 0){
+		letrasUsadas[0] = letra;
 	}
 
 }
@@ -356,7 +357,11 @@ int main(void) {
 	char nomeJogador2[20];
 	char nomeJogador1[20];
 	int chances = 0;
-	
+
+	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO"};
+	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA"};
+	char pdificil[NPALAVRAS][9] = {"PARALELO", "TELEFONE", "INSERIR", "CARAMELO", "PATINETE"};
+
 	//Inicio do jogo
 	printf("\n>>>>>>> HangMan <<<<<<<\n\n");
 	printf("\nOlá, bem-vinde ao Jogo da Forca! \nO objetivo é adivinhar a palavra secreta antes que você seja enforcade. Será que você consegue? \nMuahuahuahuahuahuahuahuahuahuahuahauhua (risada maligna).\n");

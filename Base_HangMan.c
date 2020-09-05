@@ -243,9 +243,6 @@ void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[]) {
 		palavraSecreta[c] = toupper(palavraSecretaAux[c]);
 	}
 
-	printf("\n%s\n", palavraSecretaAux);
-	printf("\n%s\n", palavraSecreta);
-
 	printf("\nPronto, palavra secreta escolhida.");
 	printf("\nHora da adivinhação!\n");
 
@@ -359,11 +356,7 @@ int main(void) {
 	char nomeJogador2[20];
 	char nomeJogador1[20];
 	int chances = 0;
-
-	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO"};
-	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA"};
-	char pdificil[NPALAVRAS][9] = {"PARALELO", "TELEFONE", "INSERIR", "CARAMELO", "PATINETE"};
-
+	
 	//Inicio do jogo
 	printf("\n>>>>>>> HangMan <<<<<<<\n\n");
 	printf("\nOlá, bem-vinde ao Jogo da Forca! \nO objetivo é adivinhar a palavra secreta antes que você seja enforcade. Será que você consegue? \nMuahuahuahuahuahuahuahuahuahuahuahauhua (risada maligna).\n");

@@ -263,18 +263,27 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "SABOES", "MEDITO", "DIGITO", "SONECA"};
 	char pdificil[NPALAVRAS][8] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
 
-	//conforme o número gerado randomicamente, computador escolhe palavra da lista, segundo dificuldade
-	for (int z = 0; z < LIMITE ; z++){
-		if (dificuldade == 4) {
-			palavraSecreta[z] = pfacil[num2][z];
-		} else if (dificuldade == 6) {
-			palavraSecreta[z] = pmedio[num2][z];
-		} else if (dificuldade == 8){
-			palavraSecreta[z] = pdificil[num2][z];
-		} else {
-			printf("\nOps, aconteceu algum erro terrível. Desculpe =(");
+	//conforme o número gerado randomicamente, computador escolhe palavra da lista, de acordo com nível
+	switch(dificuldade){
+		case 4:
+			for (int z = 0; z < LIMITE-1 ; z++){
+				palavraSecreta[z] = pfacil[num2][z];
+			}
+			break;
+		case 6:
+			for (int z = 0; z < LIMITE-1 ; z++){
+				palavraSecreta[z] = pmedio[num2][z];
+			}
+			break;
+		case 8:
+			for (int z = 0; z < LIMITE-1 ; z++){
+				palavraSecreta[z] = pdificil[num2][z];
+			}
+			break;
+		default:
+			printf("Desculpe, ocorreu um erro inesperado!");
 			exit(0);
-		}
+			break;
 	}
 
 	printf("Computador: %s", palavraSecreta);

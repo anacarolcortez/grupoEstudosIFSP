@@ -8,8 +8,9 @@
 #define NPALAVRAS 10
 #define LIMITE 9 //nível máximo 8 letras + 1, o zero terminador
 char letrasUsadas[100];
-char palavraSecreta[LIMITE];
 char palavraAux[LIMITE];
+char palavraSecreta[LIMITE];
+char palavraSecretaAux[LIMITE];
 char nomeJogador2[20];
 char nomeJogador1[20];
 int chances = 0;
@@ -104,7 +105,7 @@ void personagem(int chances, const char palavraSecreta[], const char palavraAux[
 		exit(0);
 	break; 
 
-	defalut:
+	default:
 		printf("\nOps, aconteceu algum erro terrível. Desculpe =(");
 		exit(0);
 	break;
@@ -222,10 +223,9 @@ int escolhaNivel(){
 }
 
 //procedimento para jogador escolher uma palavra para seu adversário adivinhar
-void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[]) {
+void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[], char palavraSecretaAux[]) {
 	int validado = 0;
 	int nchar = 0;
-	char palavraSecretaAux[LIMITE];
 
 	//loop para verificar se quandade de letra é compatível com nível selecionado
 	do{
@@ -285,7 +285,6 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 			}
 			break;
 		default:
-			printf("Desculpe, ocorreu um erro inesperado!");
 			exit(0);
 			break;
 	}
@@ -378,13 +377,10 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 		//direciona para as funções adequadas de acordo com a modalidade do jogo
 		if (modalidade == 11 || modalidade == 22){
 			letra = digitaLetra();
-		} else if (modalidade == 21){
+		} else { //modalidade 21
 			letra = chutaLetra(chances);
 			chances++;//começa com zero, por isso vem depois da primeira execução de letra()
-		} else {
-			printf("Algo estranho aconteceu. Desculpe =(");
-			exit(0);
-		}
+		} 
 
 		//executa função comum a todas as modalidades: atualizar lista de letras usadas
 		listaDeLetras(letra, letrasUsadas);
@@ -436,19 +432,16 @@ int main(void) {
 		printf("\n\nArquinimigo (Jogador 2), digite o seu nome: \n");
 		scanf("%s%*c", nomeJogador2);
 		printf("\n%s, digite uma palavra secreta para %s adivinhar: \n", nomeJogador1, nomeJogador2);
-		escolhaPalavra(dificuldade, palavraSecreta, palavraAux);
+		escolhaPalavra(dificuldade, palavraSecreta, palavraAux, palavraSecretaAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else if (modalidade == 21) {
 		printf("\n%s, digite a palavra secreta que eu devo adivinhar: \n", nomeJogador1);
-		escolhaPalavra(dificuldade, palavraSecreta, palavraAux);
+		escolhaPalavra(dificuldade, palavraSecreta, palavraAux, palavraSecretaAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
-	} else if (modalidade == 22) {
+	} else { //modalidade 22
 		geraPalavraAleatoria(dificuldade, palavraSecreta);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
-	} else {
-		printf("Ops, algo de muito errado aconteceu. Peço desculpas =(");
-		exit(0);
-	}
+	} 
 
 	return 0;
 }

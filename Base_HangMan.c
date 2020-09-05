@@ -318,26 +318,26 @@ char digitaLetra(){
 
 void listaDeLetras(char letra, char letrasUsadas[]) {
 	int adicionar = 0;
-	int y;
+	int s;
 
 	//confere se letra recebida está na lista
-	for (y = 0; y < strlen(letrasUsadas); y++) {
-		if (letrasUsadas[y] == letra || letrasUsadas[y] == toupper(letra)){
+	  	for (s = 0; s < strlen(letrasUsadas); s++) {
+		if (letrasUsadas[s] == letra || letrasUsadas[s] == toupper(letra)){
 			adicionar = 0;
 			printf("\nLetra já utilizada!\n");
 		} else {
 			adicionar = 1;
 		}
-	}
+	}	
 	
 	//caso letra não esteja na lista, adiciona na próxima posição
 	if (adicionar == 1){
-		letrasUsadas[y+1] = letra;
+		letrasUsadas[s] = toupper(letra);
 	} 
 
-	//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
+		//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
 	if (strlen(letrasUsadas) == 0){
-		letrasUsadas[0] = letra;
+		letrasUsadas[0] = toupper(letra);
 	}
 
 }

@@ -1,5 +1,3 @@
-//Ana Carolina Cortez Alves PT 300855X
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>

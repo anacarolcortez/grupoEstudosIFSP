@@ -10,7 +10,7 @@
 #define NPALAVRAS 10
 #define LIMITE 9 //nível máximo 8 letras + 1, o zero terminador
 
-//Parte gráfica do jogo: conforme a quantidade de chues, personagem, letras escolhidas e palavra auxiliar são exibidos em tela
+//Parte gráfica do jogo: conforme a quantidade de chutes, personagem, letras escolhidas e palavra auxiliar são exibidos em tela
 void personagem(int chances, char palavraSecreta[], char palavraAux[], char letrasUsadas[]) { 	
 	
 	printf("\nLetras digitadas: %s ", letrasUsadas);
@@ -255,8 +255,8 @@ void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[]) {
 
 //procedimento para computador escolher uma pelavra aleatoria para o jogador adivinhar
 void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
-	//gera número randômico de 0 a 10
-	int num2 = rand()%NPALAVRAS+1;
+	srand(time(0));
+	int num2 = rand()%NPALAVRAS+1;	
 
 	//lista de palavras a serem escolhidas
 	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO", "MOLE", "USAR", "NOVA", "PERA", "TOCA"};
@@ -264,7 +264,7 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 	char pdificil[NPALAVRAS][8] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
 
 	//conforme o número gerado randomicamente, computador escolhe palavra da lista, segundo dificuldade
-	for (int z = 0; z < dificuldade; z++){
+	for (int z = 0; z < LIMITE ; z++){
 		if (dificuldade == 4) {
 			palavraSecreta[z] = pfacil[num2][z];
 		} else if (dificuldade == 6) {
@@ -276,6 +276,8 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 			exit(0);
 		}
 	}
+
+	printf("Computador: %s", palavraSecreta);
 }
 
 char chutaLetra(int chances){
@@ -364,6 +366,7 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 			letra = digitaLetra();
 		} else if (modalidade == 21){
 			letra = chutaLetra(chances);
+			//printf("\nPronto, escolhi a palavra. Agora tente me vencer muahuahua (risada maligna)");
 			chances++;//começa com zero, por isso vem depois da primeira execução de letra()
 		} else {
 			printf("Algo estranho aconteceu. Desculpe =(");

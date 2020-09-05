@@ -1,5 +1,3 @@
-//Ana Carolina Cortez Alves PT300855X
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -9,9 +7,15 @@
 
 #define NPALAVRAS 10
 #define LIMITE 9 //nível máximo 8 letras + 1, o zero terminador
+char letrasUsadas[100];
+char palavraSecreta[LIMITE];
+char palavraAux[LIMITE];
+char nomeJogador2[20];
+char nomeJogador1[20];
+int chances = 0;
 
 //Parte gráfica do jogo: conforme a quantidade de chutes, personagem, letras escolhidas e palavra auxiliar são exibidos em tela
-void personagem(int chances, char palavraSecreta[], char palavraAux[], char letrasUsadas[]) { 	
+void personagem(int chances, const char palavraSecreta[], const char palavraAux[], const char letrasUsadas[]) { 	
 	
 	printf("\nLetras digitadas: %s ", letrasUsadas);
 	printf("\nPalavra: %s\n", palavraAux);
@@ -260,7 +264,7 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 
 	//lista de palavras a serem escolhidas
 	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO", "MOLE", "USAR", "NOVA", "PERA", "TOCA"};
-	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "BONECO", "MEDITO", "DIGITO", "SONECA"};
+	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "SABOES", "MEDITO", "DIGITO", "SONECA"};
 	char pdificil[NPALAVRAS][8] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
 
 	//conforme o número gerado randomicamente, computador escolhe palavra da lista, de acordo com nível
@@ -342,7 +346,6 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 			printf("\nLetra já utilizada!\n");
 		} else {
 			adicionar = 1;
-			break;
 		}
 	}	
 	
@@ -411,12 +414,6 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 
 int main(void) {
 	setlocale( LC_ALL, "");	
-	char letrasUsadas[100];
-	char palavraSecreta[LIMITE];
-	char palavraAux[LIMITE];
-	char nomeJogador2[20];
-	char nomeJogador1[20];
-	int chances = 0;
 
 	//Inicio do jogo
 	printf("\n>>>>>>>>>> HangMan <<<<<<<<<<\n\n");

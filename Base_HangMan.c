@@ -286,7 +286,7 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 			break;
 	}
 
-	printf("Computador: %s", palavraSecreta);
+	//printf("Computador: %s", palavraSecreta);
 }
 
 char chutaLetra(int chances){
@@ -308,13 +308,14 @@ char chutaLetra(int chances){
 }
 
 char digitaLetra(){
-	int checaAlfa = 0;
+	int checaAlfa = 0, teste;
 	char letra;
 
 	do{
 		//usuário chuta letra;
 		printf("\nDigite uma letra:\n");
 		scanf("%c%*c", &letra);
+		//printf("%c", letra);//não está recebendo input na modalidade 21
 
 		//repete digitação até que seja digitado uma letra
 		if((letra >= 'a' && letra <= 'z') || (letra >= 'A' && letra <= 'Z')){
@@ -375,7 +376,6 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 			letra = digitaLetra();
 		} else if (modalidade == 21){
 			letra = chutaLetra(chances);
-			//printf("\nPronto, escolhi a palavra. Agora tente me vencer muahuahua (risada maligna)");
 			chances++;//começa com zero, por isso vem depois da primeira execução de letra()
 		} else {
 			printf("Algo estranho aconteceu. Desculpe =(");

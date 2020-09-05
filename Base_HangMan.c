@@ -1,3 +1,5 @@
+//Ana Carolina Cortez Alves PT 300855X
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -13,7 +15,7 @@ char palavraSecreta[LIMITE];
 char palavraSecretaAux[LIMITE];
 char nomeJogador2[20];
 char nomeJogador1[20];
-int chances = 0;
+int chances = 0, nchar;
 
 //Parte gráfica do jogo: conforme a quantidade de chutes, personagem, letras escolhidas e palavra auxiliar são exibidos em tela
 void personagem(int chances, const char palavraSecreta[], const char palavraAux[], const char letrasUsadas[]) { 	
@@ -22,6 +24,8 @@ void personagem(int chances, const char palavraSecreta[], const char palavraAux[
 	printf("\nPalavra: %s\n", palavraAux);
 	
 	switch (chances) {
+
+
 	case 0 :
 		printf("\n  _______\n");
 		printf("  |/   | \n");
@@ -223,9 +227,8 @@ int escolhaNivel(){
 }
 
 //procedimento para jogador escolher uma palavra para seu adversário adivinhar
-void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[], char palavraSecretaAux[]) {
+void escolhaPalavra(int dificuldade, int nchar, char palavraSecreta[], char palavraAux[], char palavraSecretaAux[]) {
 	int validado = 0;
-	int nchar = 0;
 
 	//loop para verificar se quandade de letra é compatível com nível selecionado
 	do{
@@ -242,7 +245,6 @@ void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[], c
 
 	}while(validado == 0);
 	
-	//preenche vetor palavraAux[] com traços, para auxiliar o jogador na posição de cada letra dentro da palavra secreta
 	for (int t = 0; t < nchar; t++){
 		palavraAux[t] = '-';
 	}
@@ -258,7 +260,8 @@ void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[], c
 }
 
 //procedimento para computador escolher uma pelavra aleatoria para o jogador adivinhar
-void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
+void geraPalavraAleatoria(int dificuldade, int nchar, char palavraSecreta[], char palavraAux[]) {
+	
 	srand(time(0));
 	int num2 = rand()%NPALAVRAS+1;	
 
@@ -289,7 +292,12 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 			break;
 	}
 
-	//printf("Computador: %s", palavraSecreta);
+	nchar = strlen(palavraSecreta);
+	
+	//cria vetor de traços para auxiliar o jogador na localização das letras na palavra secreta
+	for (int t = 0; t < nchar; t++){
+		palavraAux[t] = '-';
+	}
 }
 
 char chutaLetra(int chances){
@@ -317,8 +325,9 @@ char digitaLetra(){
 	do{
 		//usuário chuta letra;
 		printf("\nDigite uma letra:\n");
-		scanf("%c%*c", &letra);
-		//printf("%c", letra);//não está recebendo input na modalidade 21
+		scanf("%c", &letra);
+		//não posso limpar o buffer aqui, pois dá problema na modalidade 22
+		//como excluir caracteres extra que o sistema recebe no scanf?
 
 		//repete digitação até que seja digitado uma letra
 		if((letra >= 'a' && letra <= 'z') || (letra >= 'A' && letra <= 'Z')){
@@ -432,14 +441,14 @@ int main(void) {
 		printf("\n\nArquinimigo (Jogador 2), digite o seu nome: \n");
 		scanf("%s%*c", nomeJogador2);
 		printf("\n%s, digite uma palavra secreta para %s adivinhar: \n", nomeJogador1, nomeJogador2);
-		escolhaPalavra(dificuldade, palavraSecreta, palavraAux, palavraSecretaAux);
+		escolhaPalavra(dificuldade, nchar, palavraSecreta, palavraAux, palavraSecretaAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else if (modalidade == 21) {
 		printf("\n%s, digite a palavra secreta que eu devo adivinhar: \n", nomeJogador1);
-		escolhaPalavra(dificuldade, palavraSecreta, palavraAux, palavraSecretaAux);
+		escolhaPalavra(dificuldade, nchar, palavraSecreta, palavraAux, palavraSecretaAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else { //modalidade 22
-		geraPalavraAleatoria(dificuldade, palavraSecreta);
+		geraPalavraAleatoria(dificuldade, nchar, palavraSecreta, palavraAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} 
 

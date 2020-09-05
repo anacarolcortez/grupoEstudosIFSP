@@ -1,5 +1,3 @@
-//Ana Carolina Cortez Alves PT300855X
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -8,7 +6,7 @@
 #include <ctype.h>
 
 #define NPALAVRAS 5
-#define LIMITE 10
+#define LIMITE 9 //nível máximo 8 letras + 1, o zero terminador
 
 //Parte gráfica do jogo: conforme a quantidade de chues, personagem, letras escolhidas e palavra auxiliar são exibidos em tela
 void personagem(int chances, char palavraSecreta[], char palavraAux[], char letrasUsadas[]) { 	
@@ -93,7 +91,7 @@ void personagem(int chances, char palavraSecreta[], char palavraAux[], char letr
 	case 7:
 		printf("\n _________________________");
 		printf("\n|                         |");
-		printf("\n| Parabéns! Você acertou! |");
+		printf("\n|   Parabéns, vencedor!   |");
 		printf("\n|_________________________|");
 		printf("\n        \\ (•◡•) /         ");
 		printf("\n");
@@ -248,8 +246,19 @@ void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[]) {
 
 }
 
-void chutaLetra(){
-	printf("Computador escolhe letra radomicamente");
+char chutaLetra(){
+	srand(time(0));
+	int max = 90;
+	int min = 65;
+
+	//escolhe um número randômico entre 65 e 90, que corresponde ao intervao de A a Z na tabela ASCII
+	int num = rand() % (max + 1 - min) + min;
+
+	//converte o numero em caractere
+	char letter = (char) num;
+
+	printf("\nComputador escolheu %c", letter);
+	return letter;
 }
 
 char digitaLetra(){
@@ -282,7 +291,6 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	//confere se letra recebida está na lista
 	for (y = 0; y < strlen(letrasUsadas); y++) {
 		if (letrasUsadas[y] == letra || letrasUsadas[y] == toupper(letra)){
-			printf("\nLetra já utilizada!\n");
 			adicionar = 0;
 		} else {
 			adicionar = 1;
@@ -291,7 +299,9 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	
 	//caso letra não esteja na lista, adiciona na próxima posição
 	if (adicionar == 1){
-		letrasUsadas[y+1] = toupper(letra);
+		letrasUsadas[y+1] = letra;
+	} else {
+		printf("\nLetra já utilizada!\n"); // fora do primeiro for porque, caso a mesma letra esteja presente na palavra mais de uma vez, a frase se repetiria várias vezes
 	}
 
 	//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
@@ -305,18 +315,24 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 
 	char letra;
 	int ganhou;
+	int jogadas = 0;
 		
 	do {
 		//variável de controle do loop
 		int acertou = 0;
+		
+		//exibe quantidade de rodadas feitas
+		jogadas++;
+		printf("\nJogada nº %d\n", jogadas);
 
 		//direciona para as funções adequadas de acordo com a modalidade do jogo
 		if (modalidade == 11){
 			letra = digitaLetra();
 			listaDeLetras(letra, letrasUsadas);
 		} else if (modalidade == 21){
-			printf("Implementar");
-			letra = 'a';
+			letra = chutaLetra();
+			listaDeLetras(letra, letrasUsadas);
+			chances++;
 		} else if (modalidade == 22) {
 			printf("Implementar");
 			letra = 'b';
@@ -335,7 +351,7 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 		}
 		
 		//informa o usuário que a letra chutada não está correta e reduz o número de chances disponíveis para novos chutes;
-		if (acertou == 0){
+		if (acertou == 0 && modalidade == 11){
 			printf("\nA palavra não contém essa letra!");
 			chances++;
 		}
@@ -386,7 +402,9 @@ int main(void) {
 		escolhaPalavra(dificuldade, palavraSecreta, palavraAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else if (modalidade == 21) {
-		//dificuldade entra como parâmetro;
+		printf("\n%s, digite a palavra secreta que eu devo adivinhar: \n", nomeJogador1);
+		escolhaPalavra(dificuldade, palavraSecreta, palavraAux);
+		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else if (modalidade == 22) {
 		//dificuldade entra como parâmetro;
 	} else {

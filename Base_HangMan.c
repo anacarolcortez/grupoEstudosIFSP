@@ -1,3 +1,5 @@
+//Ana Carolina Cortez Alves PT300855X
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -5,7 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define NPALAVRAS 5
+#define NPALAVRAS 10
 #define LIMITE 9 //nível máximo 8 letras + 1, o zero terminador
 
 //Parte gráfica do jogo: conforme a quantidade de chues, personagem, letras escolhidas e palavra auxiliar são exibidos em tela
@@ -91,12 +93,17 @@ void personagem(int chances, char palavraSecreta[], char palavraAux[], char letr
 	case 7:
 		printf("\n _________________________");
 		printf("\n|                         |");
-		printf("\n|   Parabéns, vencedor!   |");
+		printf("\n|  Parabéns ao vencedor!  |");
 		printf("\n|_________________________|");
 		printf("\n        \\ (•◡•) /         ");
 		printf("\n");
 		exit(0);
 	break; 
+
+	defalut:
+		printf("\nOps, aconteceu algum erro terrível. Desculpe =(");
+		exit(0);
+	break;
 	}
 }
 
@@ -210,7 +217,7 @@ int escolhaNivel(){
 	return nivel;
 }
 
-
+//procedimento para jogador escolher uma palavra para seu adversário adivinhar
 void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[]) {
 	int validado = 0;
 	int nchar = 0;
@@ -244,6 +251,31 @@ void escolhaPalavra(int dificuldade, char palavraSecreta[], char palavraAux[]) {
 	printf("\nPronto, palavra secreta escolhida.");
 	printf("\nHora da adivinhação!\n");
 
+}
+
+//procedimento para computador escolher uma pelavra aleatoria para o jogador adivinhar
+void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
+	//gera número randômico de 0 a 10
+	int num2 = rand()%NPALAVRAS+1;
+
+	//lista de palavras a serem escolhidas
+	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO", "MOLE", "USAR", "NOVA", "PERA", "TOCA"};
+	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "SABOES", "MEDITO", "DIGITO", "SONECA"};
+	char pdificil[NPALAVRAS][8] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
+
+	//conforme o número gerado randomicamente, computador escolhe palavra da lista, segundo dificuldade
+	for (int z = 0; z < dificuldade; z++){
+		if (dificuldade == 4) {
+			palavraSecreta[z] = pfacil[num2][z];
+		} else if (dificuldade == 6) {
+			palavraSecreta[z] = pmedio[num2][z];
+		} else if (dificuldade == 8){
+			palavraSecreta[z] = pdificil[num2][z];
+		} else {
+			printf("\nOps, aconteceu algum erro terrível. Desculpe =(");
+			exit(0);
+		}
+	}
 }
 
 char chutaLetra(){
@@ -301,7 +333,7 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	if (adicionar == 1){
 		letrasUsadas[y+1] = letra;
 	} else {
-		printf("\nLetra já utilizada!\n"); // fora do primeiro for porque, caso a mesma letra esteja presente na palavra mais de uma vez, a frase se repetiria várias vezes
+		printf("\nLetra já utilizada!\n"); // fora do primeiro "for" porque, caso a mesma letra esteja presente na palavra mais de uma vez, a frase se repetiria várias vezes
 	}
 
 	//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
@@ -334,8 +366,8 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 			listaDeLetras(letra, letrasUsadas);
 			chances++;
 		} else if (modalidade == 22) {
-			printf("Implementar");
-			letra = 'b';
+			letra = digitaLetra();
+			listaDeLetras(letra, letrasUsadas);
 		} else {
 			printf("Algo estranho aconteceu. Desculpe =(");
 			exit(0);
@@ -350,8 +382,8 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 			} 
 		}
 		
-		//informa o usuário que a letra chutada não está correta e reduz o número de chances disponíveis para novos chutes;
-		if (acertou == 0 && modalidade == 11){
+		//informa o usuário que a letra chutada não está correta e reduz o número de chances disponíveis para novos chutes, para as modalidade cabíveis da regra;
+		if (acertou == 0 && (modalidade == 11 || modalidade == 22)){
 			printf("\nA palavra não contém essa letra!");
 			chances++;
 		}
@@ -373,10 +405,6 @@ int main(void) {
 	char nomeJogador2[20];
 	char nomeJogador1[20];
 	int chances = 0;
-
-	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO"};
-	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA"};
-	char pdificil[NPALAVRAS][9] = {"PARALELO", "TELEFONE", "INSERIR", "CARAMELO", "PATINETE"};
 
 	//Inicio do jogo
 	printf("\n>>>>>>> HangMan <<<<<<<\n\n");
@@ -406,7 +434,8 @@ int main(void) {
 		escolhaPalavra(dificuldade, palavraSecreta, palavraAux);
 		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else if (modalidade == 22) {
-		//dificuldade entra como parâmetro;
+		geraPalavraAleatoria(dificuldade, palavraSecreta);
+		confereLetra(dificuldade, chances, modalidade, palavraSecreta, palavraAux, letrasUsadas);
 	} else {
 		printf("Ops, algo de muito errado aconteceu. Peço desculpas =(");
 		exit(0);

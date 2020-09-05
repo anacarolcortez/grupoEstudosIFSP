@@ -324,6 +324,7 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	for (y = 0; y < strlen(letrasUsadas); y++) {
 		if (letrasUsadas[y] == letra || letrasUsadas[y] == toupper(letra)){
 			adicionar = 0;
+			printf("\nLetra já utilizada!\n");
 		} else {
 			adicionar = 1;
 		}
@@ -332,9 +333,7 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 	//caso letra não esteja na lista, adiciona na próxima posição
 	if (adicionar == 1){
 		letrasUsadas[y+1] = letra;
-	} else {
-		printf("\nLetra já utilizada!\n"); // fora do primeiro "for" porque, caso a mesma letra esteja presente na palavra mais de uma vez, a frase se repetiria várias vezes
-	}
+	} 
 
 	//caso o vetor de letras esteja vazio, preenche com a primeira letra recebida do usuário
 	if (strlen(letrasUsadas) == 0){
@@ -358,20 +357,18 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 		printf("\nJogada nº %d\n", jogadas);
 
 		//direciona para as funções adequadas de acordo com a modalidade do jogo
-		if (modalidade == 11){
+		if (modalidade == 11 || modalidade == 22){
 			letra = digitaLetra();
-			listaDeLetras(letra, letrasUsadas);
 		} else if (modalidade == 21){
 			letra = chutaLetra();
-			listaDeLetras(letra, letrasUsadas);
 			chances++;
-		} else if (modalidade == 22) {
-			letra = digitaLetra();
-			listaDeLetras(letra, letrasUsadas);
 		} else {
 			printf("Algo estranho aconteceu. Desculpe =(");
 			exit(0);
 		}
+
+		//executa função comum a todas as modalidades: atualizar lista de letras usadas
+		listaDeLetras(letra, letrasUsadas);
 
 		//confere se palavra contém a letra digitada. Caso tenha, traço correspondente da palavra auxiliar é substituído pela letra correta
 		for (int i=0; i < dificuldade; i++) {
@@ -407,7 +404,7 @@ int main(void) {
 	int chances = 0;
 
 	//Inicio do jogo
-	printf("\n>>>>>>> HangMan <<<<<<<\n\n");
+	printf("\n>>>>>>>>>> HangMan <<<<<<<<<<\n\n");
 	printf("\nOlá, bem-vinde ao Jogo da Forca! \nO objetivo é adivinhar a palavra secreta antes que você seja enforcade. Será que você consegue? \nMuahuahuahuahuahuahuahuahuahuahuahauhua (risada maligna).\n");
 	
 	//Leitura do nome do Jogador 1

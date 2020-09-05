@@ -260,7 +260,7 @@ void geraPalavraAleatoria(int dificuldade, char palavraSecreta[]) {
 
 	//lista de palavras a serem escolhidas
 	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO", "MOLE", "USAR", "NOVA", "PERA", "TOCA"};
-	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "SABOES", "MEDITO", "DIGITO", "SONECA"};
+	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "BONECO", "MEDITO", "DIGITO", "SONECA"};
 	char pdificil[NPALAVRAS][8] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
 
 	//conforme o número gerado randomicamente, computador escolhe palavra da lista, de acordo com nível
@@ -342,6 +342,7 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 			printf("\nLetra já utilizada!\n");
 		} else {
 			adicionar = 1;
+			break;
 		}
 	}	
 	
@@ -388,7 +389,6 @@ void confereLetra(int dificuldade, int chances, int modalidade, char palavraSecr
 		//confere se palavra contém a letra digitada. Caso tenha, traço correspondente da palavra auxiliar é substituído pela letra correta
 		for (int i=0; i < dificuldade; i++) {
 			if (palavraSecreta[i] == letra || palavraSecreta[i] == toupper(letra)) {
-				printf("\nAcertou a letra!");
 				palavraAux[i] = toupper(letra);
 				acertou = 1;
 			} 

@@ -18,12 +18,14 @@ O usuário precisa adivinhar um número aleatório gerado pelo sistema. A quanti
 #include <stdlib.h>
 #include <time.h>
 #include <locale.h>
+#include <ctype.h>
+
 
 int main() {
   
-  int magicNumber, guessNumber, chooseLevel, guessTimes, gameOver;
+  int magicNumber, guessNumber, chooseLevel, guessTimes, gameOver, vez=1;
 
-  printf("Bem vindo ao Jogo de Adivinhação! Escolha o nível: (1) fácil, (2) médio, (3) difícil\n");
+  printf("Bem vindo ao Jogo de Adivinhação! \nEscolha o nível: (1) fácil, (2) médio, (3) difícil\n");
   scanf("%d", &chooseLevel);
 
   switch (chooseLevel){
@@ -44,20 +46,36 @@ int main() {
   srand(time(0));
   magicNumber =	rand()%100;
   
-  printf("Ótimo. Já escolhi um número. Tente adivinhá-lo!\n");
+  printf("Ótimo. Já escolhi um número. Tente adivinhá-lo. Você tem %d chances!\n", guessTimes);
   
   for (gameOver = guessTimes; gameOver > 0; gameOver--){
-    printf("Faça seu chute:\n");
+    printf("\nTentativa %d\n", vez);
+	printf("Faça seu chute:\n");
     scanf("%d", &guessNumber);
+
+	if (!isalpha(guessNumber)){
+		if (guessNumber > magicNumber){
+      		printf("Ops, seu chute até acima do número correto!");
+    	} else if (guessNumber < magicNumber){
+      		printf("Ixi, seu chute está abaixo do número correto!");
+    	} else if (guessNumber == magicNumber){
+			printf("\n _________________________");
+			printf("\n|                         |");
+			printf("\n| Parabéns! Você acertou! |");
+			printf("\n|_________________________|");
+			printf("\n        \\ (•◡•) /         ");
+			printf("\n");
+			exit(0);
+   		} else {
+			printf("Ops, algo deu errado! Desculpe");
+			exit(0);
+		} 
+	} else {
+		printf("Ops, não é número... GAME OVER!");
+		exit(0);
+	}
     
-    if (guessNumber > magicNumber){
-      printf("Ops, seu chute até acima do número correto!");
-    } else if (guessNumber < magicNumber){
-      printf("Ixi, seu chute está abaixo do número correto!");
-    } else{
-      printf("Parabéns!!!! Você adivinhou! =D");
-      return 0;
-    }      
+	vez++;
   }
 
   if (gameOver == 0){

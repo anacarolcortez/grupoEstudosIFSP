@@ -1,3 +1,5 @@
+//Obs: Desenvolvido em sistema Linux
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -266,7 +268,7 @@ void geraPalavraAleatoria(int dificuldade, int nchar, char palavraSecreta[], cha
 	//lista de palavras a serem escolhidas
 	char pfacil[NPALAVRAS][5] = {"HOJE", "TACO", "LONA", "LOTE", "ALTO", "MOLE", "USAR", "NOVA", "PERA", "TOCA"};
 	char pmedio[NPALAVRAS][7] = {"DUVIDA", "PENSAR", "EXISTA", "HABITO", "CONCHA", "LUSTRE", "SABOES", "MEDITO", "DIGITO", "SONECA"};
-	char pdificil[NPALAVRAS][8] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
+	char pdificil[NPALAVRAS][9] = {"PARALELO", "TELEFONE", "INSERIDA", "CARAMELO", "PATINETE", "OBRIGADO", "APRENDER", "ESPECIAL", "VIOLETAS", "PODEROSA"};
 
 	//conforme o número gerado randomicamente, computador escolhe palavra da lista, de acordo com nível
 	switch(dificuldade){
@@ -323,9 +325,7 @@ char digitaLetra(){
 	do{
 		//usuário chuta letra;
 		printf("\nDigite uma letra:\n");
-		scanf("%c", &letra);
-		//não posso limpar o buffer aqui, pois dá problema na modalidade 22
-		//como excluir caracteres extra que o sistema recebe no scanf?
+		scanf("%c*c", &letra);
 
 		//repete digitação até que seja digitado uma letra
 		if((letra >= 'a' && letra <= 'z') || (letra >= 'A' && letra <= 'Z')){

@@ -350,6 +350,7 @@ void listaDeLetras(char letra, char letrasUsadas[]) {
 		if (letrasUsadas[s] == letra || letrasUsadas[s] == toupper(letra)){
 			adicionar = 0;
 			printf("\nLetra já utilizada!\n");
+			break;
 		} else {
 			adicionar = 1;
 		}
